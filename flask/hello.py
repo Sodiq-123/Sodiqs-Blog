@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_mail import Message
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -17,11 +18,15 @@ app.config['SECRET_KEY'] = '!aksnKSSNA$@ODMdms12930*%'
 app.config['SQLALCHEMY_DATABASE_URI']=\
     'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
+app.config['FLASKY_MAIL_SENDER'] = 'sodiq.agunbiade.4@gmail.com'
+
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+mail = Mail(app)
 
 class Role(db.Model):
     __tablename__ = 'roles'
