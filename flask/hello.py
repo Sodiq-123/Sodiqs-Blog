@@ -9,6 +9,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_mail import Mail, Message
+from threading import Thread
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -45,12 +46,19 @@ class Role(db.Model):
         return f'<Role {self.name}>'
 
 
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
+
+
 def send_email(to, sender, template, **kwargs):
     msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + ' ' + subject, \
         sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
     msg.body = render_template(template + '.txt', **kwargs)
-    msg.html = render_template(template + '.html', **kwargs)
-    mail.send(msg)
+    msg.html = render_template(template + '.html', **kwargs)         
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
 
 
 class User(db.Model):
@@ -101,4 +109,3 @@ def index():
         return redirect(url_for('index'))
     return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'), known=session.get('known', False))
 
-    
