@@ -1,0 +1,10 @@
+# Package extensions
+__pycache__
+*.idea
+*.vscode
+
+# Database
+*.sqlite
+
+# Virtual Environment
+venv
