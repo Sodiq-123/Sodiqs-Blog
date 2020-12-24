@@ -8,7 +8,7 @@ class Config:
     MAIL_PORT = int(os.environ.get('MAIL_PORT', '465'))
     MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL', 'true').lower() in ['true', 'on', '1']
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'sodiq.agunbiade.4@gmail.com'
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'Temitope123*#'
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     FLASK_MAIL_SUBJECT_PREFIX = 'Hello, '
     # FLASK_MAIL_SENDER = 'sodiq.agunbiade.4@gmail.com'
     # FLASK_ADMIN = os.environ.get('FLASK_ADMIN')
