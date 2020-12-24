@@ -8,3 +8,6 @@ __pycache__
 
 # Virtual Environment
 venv
+
+# Environment variable
+.env
