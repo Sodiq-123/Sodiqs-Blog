@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth 
 from ..import db
@@ -41,6 +41,7 @@ def register():
         send_email(user.email, 'Confirm Your Account', 
                     'auth/email/confirm', user=user, token=token)
         flash('A confirmation email has been sent to you by email.')
+        # print(url_for('auth.confirm', token=token, _external=True))
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
@@ -77,5 +78,10 @@ def resend_confirmation():
     token = current_user.generate_confirmation_token()
     send_email(current_user.email, 'Confirm Your Account', 'auth/email/confirm', 
                 user=current_user, token=token)
+    # send_email(
+    #     'Confirm Your Account', 
+    #     render_template('auth/email/confirm.html', user=current_user, token=token), 
+    #     current_user.email
+    # )
     flash('A new confirmation email has been sent to you by email.')
     return redirect(url_for('main.index'))
