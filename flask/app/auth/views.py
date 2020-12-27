@@ -4,7 +4,7 @@ from . import auth
 from ..import db
 from ..models import User
 from ..email import send_email
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm
 
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
@@ -45,6 +45,14 @@ def register():
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
+@auth.before_app_request
+def before_request():
+    if current_user.is_authenticated and not current_user.confirmed \
+        and request.blueprint != 'auth' \
+        and request.endpoint != 'static':
+        return redirect(url_for('auth.unconfirmed'))
+
+
 @auth.route('/confirm/<token>')
 @login_required
 def confirm(token):
@@ -56,14 +64,6 @@ def confirm(token):
     else:
         flash('The confirmation link is invalid or has expired.')
     return redirect(url_for('main.index'))
-
-
-@auth.before_app_request
-def before_request():
-    if current_user.is_authenticated and not current_user.confirmed \
-        and request.blueprint != 'auth' \
-        and request.endpoint != 'static':
-        return redirect(url_for('auth.unconfirmed'))
 
 
 @auth.route('/unconfirmed')
