@@ -72,6 +72,7 @@ def unconfirmed():
         return redirect(url_for('main.index'))
     return render_template('auth/unconfirmed.html')
 
+
 @auth.route('/confirm')
 @login_required
 def resend_confirmation():
@@ -101,6 +102,7 @@ def change_password():
         else:
             flash('Invalid password.')
     return render_template('auth/change_password.html', form=form)
+
 
 @auth.route('/reset', methods=['GET', 'POST'])
 def password_reset_request():
