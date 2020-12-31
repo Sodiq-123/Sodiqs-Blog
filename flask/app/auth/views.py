@@ -5,6 +5,8 @@ from ..import db
 from ..models import User
 from ..email import send_email
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm, PasswordResetRequestForm, PasswordtResetForm, ChangeEmailForm
+from .decorators import admin_required, permission_required
+
 
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
@@ -163,3 +165,17 @@ def change_email(token):
     else:
         flash('Invalid request.')
     return redirect(url_for('main.index'))
+
+
+@main.route('/admin')
+@login_required
+@admin_required
+def for_admins_only():
+    return "For administrators!"
+
+
+@main.route('/moderate')
+@login_required
+@permission_required(Permission.MODERATE)
+def for_moderators_only():
+    return "For comment moderators!"
