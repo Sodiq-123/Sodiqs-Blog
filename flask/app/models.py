@@ -1,11 +1,12 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from flask import current_app
+from flask import current_app, request
 from . import db
 from flask_login import UserMixin 
 from . import login_manager
 from flask_login import UserMixin, AnonymousUserMixin
 from datetime import datetime
+import hashlib
 
 
 class Permission:
@@ -101,6 +102,12 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def gravatar(self, size=100, default='identicon', rating='g'):
+        url = 'https://secure.gravatar.com/avatar'
+        hash = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+        return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
+            url=url, hash=hash, size=size, default=default, rating=rating)
+    
     @property
     def password(self):
         raise AttributeError('Password is not a readable attribute')
