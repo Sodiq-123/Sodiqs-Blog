@@ -12,7 +12,7 @@ class Config:
     # MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     FLASK_MAIL_SUBJECT_PREFIX = 'Hello, '
     MAIL_SENDER = 'sodiq.agunbiade.4@gmail.com'
-    BLOG_ADMIN = os.environ.get('BLOG_ADMIN')
+    BLOG_ADMIN = os.environ.get('BLOG_ADMIN
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod
