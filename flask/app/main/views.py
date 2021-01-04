@@ -9,7 +9,7 @@ from ..decorators import admin_required
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    post = PostForm()
+    form = PostForm()
     if current_user.can(Permission.WRITE) and form.validate_on_submit():
         post = Post(body=form.body.data,
                     author=current_user._get_current_object())
