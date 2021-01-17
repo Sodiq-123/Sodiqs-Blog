@@ -107,7 +107,7 @@ def edit(id):
     return render_template('edit_post.html', form=form)
 
 
-main.route('/follow/<username>')
+@main.route('/follow/<username>')
 @login_required
 @permission_required(Permission.FOLLOW)
 def follow(username):
