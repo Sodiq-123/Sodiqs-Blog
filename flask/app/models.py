@@ -11,12 +11,7 @@ from markdown import markdown
 import bleach 
 
 
-class Permission:
-    FOLLOW = 1
-    COMMENT = 2
-    WRITE = 4
-    MODERATE = 8
-    ADMIN = 16
+c
 
 
 class Role(db.Model):
