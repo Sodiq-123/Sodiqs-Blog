@@ -4,7 +4,7 @@ from . import auth
 from ..import db
 from ..models import User
 from ..email import send_email
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm, PasswordResetRequestForm, PasswordtResetForm, ChangeEmailForm
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
